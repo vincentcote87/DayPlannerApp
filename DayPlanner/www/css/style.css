@@ -1,0 +1,13 @@
+.swiper-slide {
+  height: 100vh;
+  background: rgb(172, 170, 170);
+}
+
+.button-fill {
+  width: 30%;
+  margin: 16px;
+}
+
+.question {
+  font-size: 28px;
+}
