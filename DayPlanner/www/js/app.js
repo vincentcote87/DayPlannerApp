@@ -36,13 +36,13 @@ var drinks = [{
   str: 'Have a ceaser'
 }, {
   name: 'juice',
-  str: 'Have a a glass of orange juice'
+  str: 'Have a glass of orange juice'
 }, {
   name: 'milk',
   str: 'Pour a glass of milk'
 }, {
   name: 'water',
-  str: 'Late night, have some water'
+  str: 'Have a glass of water'
 }];
 drinks = shuffle(drinks);
 
@@ -112,7 +112,82 @@ var afternoonActivities = [{
 }];
 afternoonActivities = shuffle(afternoonActivities);
 
-var sessionChoices = [breakfastItem, drinks, morningActivities, lunchItems, afternoonActivities];
+var dinnerItem = [{
+  name: 'spaghetti',
+  str: 'Make some spaghetti'
+}, {
+  name: 'fancyMeal',
+  str: 'Cook a five course meal'
+}, {
+  name: 'niceRestaurent',
+  str: 'Go out to a nice restaurent'
+}, {
+  name: 'pizza',
+  str: 'Order a pizza',
+}, {
+  name: 'breakfast',
+  str: 'Have breakfast for dinner'
+}, {
+  name: 'kd',
+  str: 'Make a pot of Kraft Dinner'
+}, {
+  name: 'burger',
+  str: 'Go out for a burger'
+}];
+dinnerItem = shuffle(dinnerItem);
+
+var eveningActivities = [{
+  name: 'movie',
+  str: 'Go to the movie theaters'
+}, {
+  name: 'drinks',
+  str: 'Go out for drinks with firends'
+}, {
+  name: 'hockey',
+  str: 'Go watch a hockey game'
+}, {
+  name: 'book',
+  str: 'Read a book',
+}, {
+  name: 'netflix',
+  str: 'Turn on Netflix and watch a movie'
+}, {
+  name: 'videoGames',
+  str: 'Play some video games'
+}, {
+  name: 'walk',
+  str: 'Go for a walk'
+}];
+eveningActivities = shuffle(eveningActivities);
+
+var nightActivities = [{
+  name: 'sleep',
+  str: 'Go to bed for the night'
+}, {
+  name: 'bath',
+  str: 'Have a relaxing bath before bed'
+}, {
+  name: 'stayUp',
+  str: 'Stay up all night playing games'
+}, {
+  name: 'scaryMovie',
+  str: 'Watch scary movies in the dark',
+}, {
+  name: 'call',
+  str: 'Call a friend to talk about your day'
+}];
+nightActivities = shuffle(nightActivities);
+
+var sessionChoices = [
+  breakfastItem,
+  drinks,
+  morningActivities,
+  lunchItems,
+  afternoonActivities,
+  dinnerItem,
+  eveningActivities,
+  nightActivities
+];
 var userChoices = [];
 
 function Choice(question, c1, c2, c3) {
@@ -153,7 +228,11 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
   $('.item-content').on('click', function () {
     $(this).closest('ul').children().addClass('disabled');
     userChoices.push(findObject($('input', this).val()));
-    swiper.slideNext();
+    if ($(this).attr('data-last') == 'true') {
+      self.app.views.main.router.navigate('/DayPlanned/');
+    } else {
+      swiper.slideNext();
+    }
   });
 
   function initChoices() {
@@ -187,9 +266,9 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
 
 $$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
   $('#plannedStr').html(getDayStr());
-  
+
   function getDayStr() {
-    return `After you wake up you will ${userChoices[0].str} and ${userChoices[1].str}, once you are done breakfast it is time to ${userChoices[2].str}. After a couple hours it will be time for lunch, you will ${userChoices[3].str}, good call! Now feeling nice and full it's time to ${userChoices[4].str} and more to come...`
+    return `After you wake up you will ${userChoices[0].str.toLowerCase()} and ${userChoices[1].str.toLowerCase()}, once you are done breakfast it is time to ${userChoices[2].str.toLowerCase()}. After a couple hours it will be time for lunch, you will ${userChoices[3].str.toLowerCase()}, good call! Now feeling nice and full it's time to ${userChoices[4].str.toLowerCase()}. That was a pretty busy afternoon, for dinner you will ${userChoices[5].str.toLowerCase()}. The day is almost over but why not ${userChoices[6].str.toLowerCase()}. It's now almost time to turn in, let's finish strong and ${userChoices[7].str.toLowerCase()}! <br><br> Looks like you have a busy day ahead of you, better get to it!`
   }
 });
 
