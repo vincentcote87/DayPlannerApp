@@ -203,7 +203,7 @@ var app = new Framework7({
     path: '/home/',
     url: '../index.html'
   }, {
-    path: '/ChoicesPage/',
+    path: '/ChoicesPage/:computerChoice/',
     url: '../pages/ChoicesPage.html'
   }, {
     path: '/DayPlanned/',
@@ -215,14 +215,22 @@ var $$ = Dom7;
 var mainView = app.views.create('.view-main');
 
 document.getElementById('startBtn').onclick = function () {
-  self.app.views.main.router.navigate('/ChoicesPage/')
+  self.app.views.main.router.navigate('/ChoicesPage/false/')
 };
 
-$$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
+document.getElementById('luckyBtn').onclick = function () {
+  self.app.views.main.router.navigate('/ChoicesPage/true/')
+};
+
+$$(document).on('page:init', '.page[data-name="ChoicesPage"]', function (e) {
   initChoices();
-  console.log(findObject('tea'));
+
   var swiper = app.swiper.create('.swiper-container', {
     speed: 400,
+  });
+
+  $('.choose').on('click', function () {
+    chooseRandom($(this).attr('data-question'));
   });
 
   $('.item-content').on('click', function () {
@@ -234,6 +242,21 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
       swiper.slideNext();
     }
   });
+
+  if (e.detail.route.params.computerChoice == 'true') {
+    setTimeout(function() {chooseWithDelay(1);}, 800);
+    // chooseWithDelay(1);
+  };
+ 
+  function chooseWithDelay(i) {
+    if (i <= sessionChoices.length) {
+      console.log(i);
+      chooseRandom(`q${i}`);
+      setTimeout(function() {
+        chooseWithDelay(i + 1);
+      }, 800)
+    }
+  }
 
   function initChoices() {
     for (var i = 0; i < sessionChoices.length; ++i) {
@@ -259,9 +282,14 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
     return obj;
   }
 
-  document.getElementById('doneBtn').onclick = function () {
-    self.app.views.main.router.navigate('/DayPlanned/')
-  };
+  function chooseRandom(id) {
+    var choice = Math.floor(Math.random() * 3) + 1;
+    $(`#${id}c${choice} > input`).attr('checked', 'checked');
+    setTimeout(function () {
+      $(`#${id}c${choice}`).trigger('click');
+    }, 300);
+  }
+
 });
 
 $$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
