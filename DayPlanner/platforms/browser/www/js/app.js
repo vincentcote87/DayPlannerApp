@@ -200,8 +200,8 @@ function Choice(question, c1, c2, c3) {
 var app = new Framework7({
   root: "#app",
   routes: [{
-    path: '/home/',
-    url: '../index.html'
+    path: '/',
+    url: '../index.html',
   }, {
     path: '/ChoicesPage/:computerChoice/',
     url: '../pages/ChoicesPage.html'
@@ -213,6 +213,8 @@ var app = new Framework7({
 
 var $$ = Dom7;
 var mainView = app.views.create('.view-main');
+
+$('#date').html(`<span>${getDate()}</span>`);
 
 document.getElementById('startBtn').onclick = function () {
   self.app.views.main.router.navigate('/ChoicesPage/false/')
@@ -243,16 +245,24 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function (e) {
     }
   });
 
-  if (e.detail.route.params.computerChoice == 'true') {
-    setTimeout(function() {chooseWithDelay(1);}, 800);
-    // chooseWithDelay(1);
+  document.getElementById('reset').onclick = function () {
+    userChoices = [];
+    for (var i = 0; i < sessionChoices.length; ++i) {
+      sessionChoices[i] = shuffle(sessionChoices[i]);
+    }
+    self.app.views.main.router.back();
   };
- 
+
+  if (e.detail.route.params.computerChoice == 'true') {
+    setTimeout(function () {
+      chooseWithDelay(1);
+    }, 800);
+  };
+
   function chooseWithDelay(i) {
     if (i <= sessionChoices.length) {
-      console.log(i);
       chooseRandom(`q${i}`);
-      setTimeout(function() {
+      setTimeout(function () {
         chooseWithDelay(i + 1);
       }, 800)
     }
@@ -295,10 +305,94 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function (e) {
 $$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
   $('#plannedStr').html(getDayStr());
 
+  document.getElementById('resetFromEnd').onclick = function () {
+    console.log('er');
+    // mainView.router.refreshPage();
+    userChoices = [];
+    for (var i = 0; i < sessionChoices.length; ++i) {
+      sessionChoices[i] = shuffle(sessionChoices[i]);
+    }
+    // self.app.views.main.router.back().back();
+  };
+
   function getDayStr() {
     return `After you wake up you will ${userChoices[0].str.toLowerCase()} and ${userChoices[1].str.toLowerCase()}, once you are done breakfast it is time to ${userChoices[2].str.toLowerCase()}. After a couple hours it will be time for lunch, you will ${userChoices[3].str.toLowerCase()}, good call! Now feeling nice and full it's time to ${userChoices[4].str.toLowerCase()}. That was a pretty busy afternoon, for dinner you will ${userChoices[5].str.toLowerCase()}. The day is almost over but why not ${userChoices[6].str.toLowerCase()}. It's now almost time to turn in, let's finish strong and ${userChoices[7].str.toLowerCase()}! <br><br> Looks like you have a busy day ahead of you, better get to it!`
   }
 });
+
+function getDate() {
+  var date = new Date();
+  var day = date.getDay();
+  var dayNum = date.getDate();
+  var month = date.getMonth();
+  var str = '';
+
+  switch (date.getDay()) {
+    case 0:
+      str += 'Sunday, ';
+      break;
+    case 1:
+      str += 'Monday, ';
+      break;
+    case 2:
+      str += 'Tuesday, ';
+      break;
+    case 3:
+      str += 'Wednesday, ';
+      break;
+    case 4:
+      str += 'Thursday, ';
+      break;
+    case 5:
+      str += 'Friday, ';
+      break;
+    case 6:
+      str += 'Saturday, ';
+      break;
+  }
+
+  switch (date.getMonth()) {
+    case 0:
+      str += 'January ';
+      break;
+    case 1:
+      str += 'February ';
+      break;
+    case 2:
+      str += 'March ';
+      break;
+    case 3:
+      str += 'April ';
+      break;
+    case 4:
+      str += 'May ';
+      break;
+    case 5:
+      str += 'June ';
+      break;
+    case 6:
+      str += 'July ';
+      break;
+    case 7:
+      str += 'August ';
+      break;
+    case 8:
+      str += 'September ';
+      break;
+    case 9:
+      str += 'October ';
+      break;
+    case 10:
+      str += 'November ';
+      break;
+    case 11:
+      str += 'December ';
+      break;
+  }
+  str += `${date.getDate()} ${date.getFullYear()}`;
+
+  return str;
+}
 
 //source: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function shuffle(array) {
