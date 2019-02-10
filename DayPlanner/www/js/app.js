@@ -1,19 +1,49 @@
-var drinks = [{
-    name: 'coffee',
-    str: 'Have a cup of coffee'
+var breakfastItem = [{
+    name: 'pancakes',
+    str: 'Make some pancakes'
   },
   {
-    name: 'tea',
-    str: 'Have a cup of tea'
+    name: 'leftoverPizza',
+    str: 'Grab a slice of leftover pizza'
   },
   {
-    name: 'beer',
-    str: 'Have a beer'
+    name: 'cereal',
+    str: 'Pour a bowl of cereal'
   }, {
-    name: 'tea',
-    str: 'Have a ceaser'
+    name: 'oatmeal',
+    str: 'Whip up some oatmeal'
+  }, {
+    name: 'waffles',
+    str: 'Go for waffles'
+  }, {
+    name: 'eggs',
+    str: 'Make an omlette with bacon'
   }
 ];
+breakfastItem = shuffle(breakfastItem);
+
+var drinks = [{
+  name: 'coffee',
+  str: 'Have a cup of coffee'
+}, {
+  name: 'tea',
+  str: 'Have a cup of tea'
+}, {
+  name: 'beer',
+  str: 'Have a beer'
+}, {
+  name: 'ceaser',
+  str: 'Have a ceaser'
+}, {
+  name: 'juice',
+  str: 'Have a a glass of orange juice'
+}, {
+  name: 'milk',
+  str: 'Pour a glass of milk'
+}, {
+  name: 'water',
+  str: 'Late night, have some water'
+}];
 drinks = shuffle(drinks);
 
 var morningActivities = [{
@@ -58,7 +88,31 @@ var lunchItems = [{
 }];
 lunchItems = shuffle(lunchItems);
 
-var sessionChoices = [drinks, morningActivities, lunchItems];
+var afternoonActivities = [{
+  name: 'beach',
+  str: 'Go to the beach'
+}, {
+  name: 'wow',
+  str: 'Play World of Warcraft'
+}, {
+  name: 'bed',
+  str: 'Go back to bed'
+}, {
+  name: 'errand',
+  str: 'Run some errands'
+}, {
+  name: 'chores',
+  str: 'Do some chores'
+}, {
+  name: 'tv',
+  str: 'Binge your favorite show'
+}, {
+  name: 'bake',
+  str: 'Bake some goodies'
+}];
+afternoonActivities = shuffle(afternoonActivities);
+
+var sessionChoices = [breakfastItem, drinks, morningActivities, lunchItems, afternoonActivities];
 var userChoices = [];
 
 function Choice(question, c1, c2, c3) {
@@ -71,14 +125,15 @@ function Choice(question, c1, c2, c3) {
 var app = new Framework7({
   root: "#app",
   routes: [{
-      path: '/home/',
-      url: '../index.html'
-    },
-    {
-      path: '/ChoicesPage/',
-      url: '../pages/ChoicesPage.html'
-    }
-  ]
+    path: '/home/',
+    url: '../index.html'
+  }, {
+    path: '/ChoicesPage/',
+    url: '../pages/ChoicesPage.html'
+  }, {
+    path: '/DayPlanned/',
+    url: '../pages/DayPlanned.html'
+  }]
 });
 
 var $$ = Dom7;
@@ -99,7 +154,6 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
     $(this).closest('ul').children().addClass('disabled');
     userChoices.push(findObject($('input', this).val()));
     swiper.slideNext();
-    console.log(userChoices);
   });
 
   function initChoices() {
@@ -119,11 +173,23 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function () {
     var obj;
     for (var i = 0; i < sessionChoices.length; ++i) {
       sessionChoices[i].find(function (e) {
-        if (e.name == name) 
+        if (e.name == name)
           obj = e;
       })
     }
     return obj;
+  }
+
+  document.getElementById('doneBtn').onclick = function () {
+    self.app.views.main.router.navigate('/DayPlanned/')
+  };
+});
+
+$$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
+  $('#plannedStr').html(getDayStr());
+  
+  function getDayStr() {
+    return `After you wake up you will ${userChoices[0].str} and ${userChoices[1].str}, once you are done breakfast it is time to ${userChoices[2].str}. After a couple hours it will be time for lunch, you will ${userChoices[3].str}, good call! Now feeling nice and full it's time to ${userChoices[4].str} and more to come...`
   }
 });
 
