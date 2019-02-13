@@ -2,13 +2,26 @@
   text-align: center;
 }
 
+#date {
+  font-size: 22px;
+  text-align: center;
+}
+
+.introText {
+  font-size: 16px;
+  text-align: center;
+}
+
 .startBtn {
   display: inline-block;
 }
 
 .swiper-slide {
   height: 100vh;
-  background: rgb(172, 170, 170);
+  /* background: rgb(147, 186, 218); */
+  /* background-image: url('../imgs/morningCoffee.jpg');
+  background-position: center;
+  background-size: cover; */
 }
 
 .button-fill {
@@ -25,4 +38,55 @@
   z-index: 99;
   right: 20px;
   top: 10px;
+  padding: 3px 6px;
+  border: solid 1px #c70f0f;
+  border-radius: 5%;
+  background: #c70f0f;
+  color: #ffffff;
+
+}
+
+#choice1Slider {
+  /* https://www.pexels.com/photo/aerial-photo-of-mountain-surrounded-by-fog-733174/ */
+  background-image: url('../imgs/sunRise.jpg');
+}
+
+#choice2Slider {
+  /* https://www.pexels.com/photo/white-ceramic-cup-641038/ */
+  background-image: url('../imgs/morningCoffee.jpg');
+}
+
+#choice3Slider {
+  /* https://www.pexels.com/photo/person-running-near-street-between-tall-trees-878151/ */
+  background-image: url('../imgs/run.jpg');
+}
+
+#choice4Slider {
+  /* https://www.pexels.com/photo/vegetables-italian-pizza-restaurant-2232/ */
+  background-image: url('../imgs/pizza.jpg');
+}
+
+#choice5Slider {
+  /* https://www.pexels.com/photo/green-and-gray-mountain-under-blue-sky-1097778/ */
+  background-image: url('../imgs/mountain.jpg');
+}
+
+#choice6Slider {
+  /* https://www.pexels.com/photo/cooked-meat-on-brown-chopping-board-1268549/ */
+  background-image: url('../imgs/steak.jpg');
+}
+
+#choice7Slider {
+  /* https://www.pexels.com/photo/woman-walking-in-the-street-during-night-time-1134166/ */
+  background-image: url('../imgs/nightlife.jpg');
+}
+
+#choice8Slider {
+  /* https://www.pexels.com/photo/beautiful-beauty-blue-bright-414612/ */
+  background-image: url('../imgs/night.jpg');
+}
+
+.backgroundImg {
+  background-position: center;
+  background-size: cover;
 }
