@@ -307,7 +307,7 @@ $$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
 
   document.getElementById('resetFromEnd').onclick = function () {
     console.log('er');
-    // mainView.router.refreshPage();
+    mainView.router.loadPage('/');
     userChoices = [];
     for (var i = 0; i < sessionChoices.length; ++i) {
       sessionChoices[i] = shuffle(sessionChoices[i]);
