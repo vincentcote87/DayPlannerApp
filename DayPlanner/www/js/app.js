@@ -305,18 +305,8 @@ $$(document).on('page:init', '.page[data-name="ChoicesPage"]', function (e) {
 $$(document).on('page:init', '.page[data-name="DayPlanned"]', function () {
   $('#plannedStr').html(getDayStr());
 
-  document.getElementById('resetFromEnd').onclick = function () {
-    console.log('er');
-    mainView.router.loadPage('/');
-    userChoices = [];
-    for (var i = 0; i < sessionChoices.length; ++i) {
-      sessionChoices[i] = shuffle(sessionChoices[i]);
-    }
-    // self.app.views.main.router.back().back();
-  };
-
   function getDayStr() {
-    return `After you wake up you will ${userChoices[0].str.toLowerCase()} and ${userChoices[1].str.toLowerCase()}, once you are done breakfast it is time to ${userChoices[2].str.toLowerCase()}. After a couple hours it will be time for lunch, you will ${userChoices[3].str.toLowerCase()}, good call! Now feeling nice and full it's time to ${userChoices[4].str.toLowerCase()}. That was a pretty busy afternoon, for dinner you will ${userChoices[5].str.toLowerCase()}. The day is almost over but why not ${userChoices[6].str.toLowerCase()}. It's now almost time to turn in, let's finish strong and ${userChoices[7].str.toLowerCase()}! <br><br> Looks like you have a busy day ahead of you, better get to it!`
+    return `After you wake up you will ${userChoices[0].str.toLowerCase()} and ${userChoices[1].str.toLowerCase()}, once you are done breakfast it is time to ${userChoices[2].str.toLowerCase()}.<br> After a couple hours it will be time for lunch, you will ${userChoices[3].str.toLowerCase()}, good call! Now feeling nice and full it's time to ${userChoices[4].str.toLowerCase()}.<br> That was a pretty busy afternoon, for dinner you will ${userChoices[5].str.toLowerCase()}. The day is almost over but why not ${userChoices[6].str.toLowerCase()}. It's now almost time to turn in, let's finish strong and ${userChoices[7].str.toLowerCase()}! <br><br> Looks like you have a busy day ahead of you, better get to it!`
   }
 });
 
